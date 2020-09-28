@@ -27,7 +27,7 @@ const CardList = (props) => {
                     key={index}
                     avatar= {require('../img/avatar.png')}
                     name='loading'
-                    email="...@..."
+                    email="......."
                 />
             )
             :

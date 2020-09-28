@@ -1,6 +1,9 @@
 .site-page-header {
     margin: 3px;
-    padding: 2px;
-    border: 1px solid rgb(155, 157, 160);
+    padding: 10px;
+    border-radius: 18px;
+    background: #eff1f5;
+    box-shadow:  8px 8px 16px #e3e5e9, 
+                 -8px -8px 16px #fbfdff;
     text-align: Center;
   }
