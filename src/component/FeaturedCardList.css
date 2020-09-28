@@ -1,0 +1,8 @@
+.row{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.column{
+    padding: 10px;
+}
