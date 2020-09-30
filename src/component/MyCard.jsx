@@ -6,7 +6,7 @@ const MyCard = (props) => {
     return (<div className="column">
         <Card
             hoverable
-            style={{ width: 400 }}
+            style={{ width: 360 }}
             cover={<img alt="avatar" src={props.avatar} />}
         >
             <Meta title={props.name} description={props.email} />

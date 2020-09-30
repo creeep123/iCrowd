@@ -23,5 +23,11 @@ function Image4(){
     )
 }
 
+function Logo(){
+    return(
+        <img src={require('../img/avatar.png')} alt='Burwood Campus' width = '100%'  ></img>
+    )
+}
+
 export default Image
-export {Image2,Image3,Image4}
+export {Image2,Image3,Image4,Logo}

@@ -1,9 +1,13 @@
+.content-title {
+  margin: 3px;
+  padding: 8px;
+  /* border-radius: 7px;
+  background: #ffffff;
+  box-shadow: inset 6px 6px 12px #d9d9d9, 
+              inset -6px -6px 12px #ffffff; */
+  text-align: Center;
+}
+
 .site-page-header {
-    margin: 3px;
-    padding: 10px;
-    border-radius: 18px;
-    background: #eff1f5;
-    box-shadow:  8px 8px 16px #e3e5e9, 
-                 -8px -8px 16px #fbfdff;
-    text-align: Center;
-  }
+  border: 1px solid rgb(235, 237, 240);
+}

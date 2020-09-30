@@ -11,14 +11,13 @@ const Workers = (props) => {
     }
 
     return (<>
-        <h1>Worker Page</h1>
         <Search
             onChange={onSearchChange}
             placeholder="input search text"
             onSearch={value => console.log(value)}
             style={{ width: 200 }}
         />
-        <CardList searchStaff={searchTerm} />
+        <CardList searchStaff={searchTerm} listLength = {9}/>
     </>)
 }
 export default Workers

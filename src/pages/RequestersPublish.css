@@ -1,0 +1,9 @@
+.form-content {
+  background:#f0f2f5;
+  padding: 24px;
+  min-height: 280px;
+}
+
+#components-form-demo-control-hooks .ant-btn {
+    margin-right: 8px;
+  }
