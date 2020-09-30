@@ -69,23 +69,24 @@ const TaskSettings = {
 
 const RequestersPublish = () => {
     const [form] = Form.useForm();
-    const [message,setMessage] = useState('')
+    const [message, setMessage] = useState('')
 
     const onFinish = (values) => {
-        fetch('http://127.0.0.1:8081/create_task',{
-            method:"POST",
-            headers:{
-                        'Content-Type':'application/json',
-                        "Accept":'application/json,text/plain,*/*'
-                    },
-            body:JSON.stringify(values)
-        }).then((res)=>res.json())
-        .then((data)=>{
+        fetch('http://127.0.0.1:8081/create_task', {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+                "Accept": 'application/json,text/plain,*/*'
+            },
+            body: JSON.stringify(values)
+        })
+        .then((res) => res.json())
+        .then((data) => {
             setMessage(data)
             console.log('message :>> ', message)
         })
-        .catch(e=>console.log('Error :>> ', e))
-        
+        .catch(e => console.log('Error :>> ', e))
+
     };
 
     const onReset = () => {
@@ -96,6 +97,7 @@ const RequestersPublish = () => {
         console.log(date, dateString)
     }
 
+    //Disable the DatePicker Range
     function range(start, end) {
         const result = [];
         for (let i = start; i < end; i++) {
@@ -103,12 +105,10 @@ const RequestersPublish = () => {
         }
         return result;
     }
-
     function disabledDate(current) {
         // Can not select days before today and today
         return current && current < moment().endOf('day');
     }
-
     function disabledDateTime() {
         return {
             disabledHours: () => range(0, 24).splice(4, 20),
@@ -216,11 +216,11 @@ const RequestersPublish = () => {
             <Form.Item {...tailLayout}>
                 <Button type="primary" htmlType="submit">
                     Submit
-        </Button>
-        &nbsp;&nbsp;
-        <Button htmlType="button" onClick={onReset}>
+                </Button>
+                &nbsp;&nbsp;
+                <Button htmlType="button" onClick={onReset}>
                     Reset
-        </Button>
+                </Button>
             </Form.Item>
         </Form>
     </>);
