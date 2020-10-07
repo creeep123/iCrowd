@@ -1,32 +1,33 @@
 import React, { useState } from 'react'
-import { Form, Input, Button, Select, DatePicker, Typography, Switch } from 'antd';
+import { message, Form, Input, InputNumber, Button, Select, DatePicker, Typography, Switch } from 'antd';
 import { CloseOutlined, CheckOutlined } from '@ant-design/icons';
 
 import moment from 'moment'
 import './RequestersPublish.css'
 const { Option } = Select
+const { TextArea } = Input
 const { Title } = Typography
 const layout = {
     labelCol: {
-        span: 3,
+        span: 8,
     },
     wrapperCol: {
         span: 8,
     },
-};
+}
 const tailLayout = {
     wrapperCol: {
         offset: 8,
         span: 16,
     },
-};
+}
 
 const TaskSettings = {
     choice_task: (<>
-        <Title style={{ background: "#f0f2f5", width: "140%", margin: "30px -40px", padding: "20px 0px 10px 0px" }} level={3}>Worker Requirement</Title>
-        <Form.Item
-            name="choice_task_question"
-            label="Yes or No Question"
+        <Title style={{ background: "#f0f2f5", width: "140%", margin: "30px -40px", padding: "20px 0px 10px 0px" }} level={3}>Setting up your task</Title>
+        <Form.Item style={{ margin: '40px 0' }}
+            name="question"
+            label="Question"
             rules={[
                 {
                     required: true,
@@ -34,13 +35,50 @@ const TaskSettings = {
                 },
             ]}
         >
-            <Input />
-        </Form.Item></>),
+            <Input placeholder="A question with one or several answers"/>
+        </Form.Item>
+        <Form.Item
+            name="choice_task_option_1"
+            label="option 1"
+            rules={[
+                {
+                    required: true,
+                    message: 'Please input your task option1!'
+                },
+            ]}
+        >
+            <TextArea placeholder="" autoSize />
+        </Form.Item>
+        <Form.Item
+            name="choice_task_option_2"
+            label="option 2"
+            rules={[
+                {
+                    required: true,
+                    message: 'Please input your task option2!'
+                },
+            ]}
+        >
+            <TextArea placeholder="" autoSize />
+        </Form.Item>
+        <Form.Item
+            name="choice_task_option_3"
+            label="option 3"
+        >
+            <TextArea placeholder="" autoSize />
+        </Form.Item>
+        <Form.Item
+            name="choice_task_option_4"
+            label="option 4"
+        >
+            <TextArea placeholder="" autoSize />
+        </Form.Item>
+    </>),
     decision_making_task: (<>
-        <Title style={{ background: "#f0f2f5", width: "140%", margin: "30px -40px", padding: "20px 0px 10px 0px" }} level={3}>Worker Requirement</Title>
+        <Title style={{ background: "#f0f2f5", width: "140%", margin: "30px -40px", padding: "20px 0px 10px 0px" }} level={3}>Setting up your task</Title>
         <Form.Item
-            name="decision_making_task_question"
-            label="Multiple choice Question"
+            name="question"
+            label="Question"
             rules={[
                 {
                     required: true,
@@ -48,13 +86,13 @@ const TaskSettings = {
                 },
             ]}
         >
-            <Input />
+            <Input placeholder="A true or false question"/>
         </Form.Item></>),
     sentence_level_task: (<>
-        <Title style={{ background: "#f0f2f5", width: "140%", margin: "30px -40px", padding: "20px 0px 10px 0px" }} level={3}>Worker Requirement</Title>
+        <Title style={{ background: "#f0f2f5", width: "140%", margin: "30px -40px", padding: "20px 0px 10px 0px" }} level={3}>Setting up your task</Title>
         <Form.Item
-            name="choice_task_question"
-            label="sentence"
+            name="question"
+            label="Question"
             rules={[
                 {
                     required: true,
@@ -62,14 +100,14 @@ const TaskSettings = {
                 },
             ]}
         >
-            <Input />
+            <Input placeholder="Workers need to provide sentences as answers"/>
         </Form.Item></>)
 
 }
 
 const RequestersPublish = () => {
     const [form] = Form.useForm();
-    const [message, setMessage] = useState('')
+    const [serverMes, setserverMes] = useState('')
 
     const onFinish = (values) => {
         fetch('http://127.0.0.1:8081/create_task', {
@@ -80,13 +118,13 @@ const RequestersPublish = () => {
             },
             body: JSON.stringify(values)
         })
-        .then((res) => res.json())
-        .then((data) => {
-            setMessage(data)
-            console.log('message :>> ', message)
-        })
-        .catch(e => console.log('Error :>> ', e))
-
+            .then((res) => res.json())
+            .then((data) => {
+                setserverMes(data)
+            })
+            .catch(e => console.log('Error :>> ', e))
+            console.log(serverMes)
+            message.success('This is a success message')
     };
 
     const onReset = () => {
@@ -129,7 +167,7 @@ const RequestersPublish = () => {
                 ]}
             >
                 <Select
-                    placeholder="Select a option"
+                    placeholder="Select a task type"
                     allowClear
                 >
                     <Option value="choice_task">Choice Task</Option>
@@ -158,7 +196,7 @@ const RequestersPublish = () => {
                     },
                 ]}
             >
-                <Input />
+                <TextArea placeholder="" autoSize />
             </Form.Item>
             <Form.Item
                 name="expire_data"
@@ -198,20 +236,29 @@ const RequestersPublish = () => {
                 <Switch
                     checkedChildren={<CheckOutlined />}
                     unCheckedChildren={<CloseOutlined />}
-                    defaultChecked
                 />
             </Form.Item>
             <Form.Item
                 name="reward_per_person"
                 label="Reward per person"
             >
-                <Input />
+                <InputNumber
+                    defaultValue={50}
+                    formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                    parser={value => value.replace(/\$\s?|(,*)/g, '')}
+                    onChange={onChange}
+                />
             </Form.Item>
             <Form.Item
                 name="number_of_worker"
                 label="Number of worker"
             >
-                <Input />
+                <InputNumber
+                    defaultValue={1}
+                    min={1}
+                    max={99999}
+                    onChange={onChange}
+                />
             </Form.Item>
             <Form.Item {...tailLayout}>
                 <Button type="primary" htmlType="submit">

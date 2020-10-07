@@ -2,7 +2,7 @@
     background: #fff;
     padding: 24px 40px;
     min-height: 280px;
-  }
+}
 .site-page-header {
     border: 1px solid rgb(235, 237, 240);
 }
@@ -12,4 +12,10 @@
     background: rgba(255, 255, 255, 0.2);
     margin: 16px 24px 16px 0;
     float: left;
+}
+.footer {
+    border-radius: 0px;
+    background: #f0f2f5;
+    box-shadow:  10px 10px 19px #ccced0, 
+                 -10px -10px 19px #ffffff;
 }

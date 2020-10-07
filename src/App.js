@@ -31,7 +31,7 @@ const App = () => {
                     <MyRouter />
                 </div>
             </Content>
-            <Footer style={{ background: '#d6e4ff', textAlign: 'center' }}>
+            <Footer className="footer" style={{ textAlign: 'center' }}>
                 <Row>
                     <Col span={14} style={{ textAlign: "left" }}> NEWSLETTER SIGN &nbsp;&nbsp;<Input placeholder="Enter your email" style={{width:"160px"}} prefix={<SendOutlined />} /><Button >Subscribe</Button></Col>
                     <Col span={2}></Col>
