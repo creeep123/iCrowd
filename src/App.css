@@ -13,6 +13,11 @@
     margin: 16px 24px 16px 0;
     float: left;
 }
+.header { 
+    position: 'fixed';
+    z-Index: 1;
+    width: '100%'; 
+}
 .footer {
     border-radius: 0px;
     background: #f0f2f5;

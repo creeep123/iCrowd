@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { message, Form, Input, InputNumber, Button, Select, DatePicker, Typography, Switch } from 'antd';
 import { CloseOutlined, CheckOutlined } from '@ant-design/icons';
-
 import moment from 'moment'
+import ImageUploader from '../component/ImageUploader'
 import './RequestersPublish.css'
 const { Option } = Select
 const { TextArea } = Input
@@ -24,7 +24,7 @@ const tailLayout = {
 
 const TaskSettings = {
     choice_task: (<>
-        <Title style={{ background: "#f0f2f5", width: "140%", margin: "30px -40px", padding: "20px 0px 10px 0px" }} level={3}>Setting up your task</Title>
+        <Title style={{ background: "#f0f2f5", width: "60em", margin: "30px -40px", padding: "20px 0px 10px 0px" }} level={3}>Setting up your task</Title>
         <Form.Item style={{ margin: '40px 0' }}
             name="question"
             label="Question"
@@ -35,7 +35,7 @@ const TaskSettings = {
                 },
             ]}
         >
-            <Input placeholder="A question with one or several answers"/>
+            <Input placeholder="A question with one or several answers" />
         </Form.Item>
         <Form.Item
             name="choice_task_option_1"
@@ -75,7 +75,7 @@ const TaskSettings = {
         </Form.Item>
     </>),
     decision_making_task: (<>
-        <Title style={{ background: "#f0f2f5", width: "140%", margin: "30px -40px", padding: "20px 0px 10px 0px" }} level={3}>Setting up your task</Title>
+        <Title style={{ background: "#f0f2f5", width: "60em", margin: "30px -40px", padding: "20px 0px 10px 0px" }} level={3}>Setting up your task</Title>
         <Form.Item
             name="question"
             label="Question"
@@ -86,10 +86,10 @@ const TaskSettings = {
                 },
             ]}
         >
-            <Input placeholder="A true or false question"/>
+            <Input placeholder="A true or false question" />
         </Form.Item></>),
     sentence_level_task: (<>
-        <Title style={{ background: "#f0f2f5", width: "140%", margin: "30px -40px", padding: "20px 0px 10px 0px" }} level={3}>Setting up your task</Title>
+        <Title style={{ background: "#f0f2f5", width: "60em", margin: "30px -40px", padding: "20px 0px 10px 0px" }} level={3}>Setting up your task</Title>
         <Form.Item
             name="question"
             label="Question"
@@ -100,16 +100,33 @@ const TaskSettings = {
                 },
             ]}
         >
-            <Input placeholder="Workers need to provide sentences as answers"/>
+            <Input placeholder="Workers need to provide sentences as answers" />
+        </Form.Item></>),
+    image_processing: (<>
+        <Title style={{ background: "#f0f2f5", width: "60em", margin: "30px -40px", padding: "20px 0px 10px 0px" }} level={3}>Setting up your task</Title>
+        <Form.Item
+            name="image_toprocessing"
+            label={<div className="button button-primary button-rounded button-small">Primary Button</div>}
+            rules={[
+                {
+                    required: true,
+                    message: 'Please upload your image!'
+                },
+            ]}
+        >
+            <Input name="image_toprocessing" style={{opacity: 0}} type ="file" accept=".png,image/png" />
+            {/* <ImageUploader/> */}
         </Form.Item></>)
-
 }
 
 const RequestersPublish = () => {
     const [form] = Form.useForm();
     const [serverMes, setserverMes] = useState('')
+    const [checked, setChecked] = useState(false)
 
     const onFinish = (values) => {
+        console.log("data", values)
+        values.require_master_worker = checked
         fetch('http://127.0.0.1:8081/create_task', {
             method: "POST",
             headers: {
@@ -123,16 +140,16 @@ const RequestersPublish = () => {
                 setserverMes(data)
             })
             .catch(e => console.log('Error :>> ', e))
-            console.log(serverMes)
-            message.success('This is a success message')
+        console.log(serverMes)
+        message.success('This is a success message')
     };
 
     const onReset = () => {
         form.resetFields();
     };
 
-    const onChange = (date, dateString) => {
-        console.log(date, dateString)
+    const onChange = (data) => {
+        console.log(data)
     }
 
     //Disable the DatePicker Range
@@ -173,9 +190,10 @@ const RequestersPublish = () => {
                     <Option value="choice_task">Choice Task</Option>
                     <Option value="decision_making_task">Decision Making Task</Option>
                     <Option value="sentence_level_task">Sentence-Level Task</Option>
+                    <Option value="image_processing">Image Processing</Option>
                 </Select>
             </Form.Item>
-            <Title style={{ background: "#f0f2f5", width: "140%", margin: "30px -40px", padding: "20px 0px 10px 0px" }} level={3}>Describe your task to workers</Title>
+            <Title style={{ background: "#f0f2f5", width: "60em", margin: "30px -40px", padding: "20px 0px 10px 0px" }} level={3}>Describe your task to workers</Title>
             <Form.Item
                 name="title"
                 label="Title"
@@ -227,7 +245,7 @@ const RequestersPublish = () => {
                 }}
             </Form.Item>
 
-            <Title style={{ background: "#f0f2f5", width: "140%", margin: "30px -40px", padding: "20px 0px 10px 0px" }} level={3}>Worker Requirement</Title>
+            <Title style={{ background: "#f0f2f5", width: "60em", margin: "30px -40px", padding: "20px 0px 10px 0px" }} level={3}>Worker Requirement</Title>
             <Form.Item
                 name="require_master_worker"
                 label="Require Master Worker"
@@ -236,14 +254,22 @@ const RequestersPublish = () => {
                 <Switch
                     checkedChildren={<CheckOutlined />}
                     unCheckedChildren={<CloseOutlined />}
+                    onChange={(checked) => {
+                        setChecked(checked)
+                    }}
                 />
             </Form.Item>
             <Form.Item
                 name="reward_per_person"
                 label="Reward per person"
+                rules={[
+                    {
+                        required: true,
+                    },
+                ]}
             >
                 <InputNumber
-                    defaultValue={50}
+                    defaultValue={0}
                     formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                     parser={value => value.replace(/\$\s?|(,*)/g, '')}
                     onChange={onChange}
@@ -252,10 +278,15 @@ const RequestersPublish = () => {
             <Form.Item
                 name="number_of_worker"
                 label="Number of worker"
+                rules={[
+                    {
+                        required: true,
+                    },
+                ]}
             >
                 <InputNumber
-                    defaultValue={1}
-                    min={1}
+                    defaultValue={0}
+                    min={0}
                     max={99999}
                     onChange={onChange}
                 />

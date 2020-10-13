@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import CardList from '../component/CardList'
+import TaskList from '../component/TaskList'
 import { Input } from 'antd';
 
 const { Search } = Input;
@@ -17,7 +17,7 @@ const Workers = (props) => {
             onSearch={value => console.log(value)}
             style={{ width: 200 }}
         />
-        <CardList searchStaff={searchTerm} listLength = {9}/>
+        <TaskList searchStaff={searchTerm} listLength = {9}/>
     </>)
 }
 export default Workers

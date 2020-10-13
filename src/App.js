@@ -5,6 +5,7 @@ import MyRouter from './MyRouter'
 import MyPageHeader from './component/MyPageHeader'
 import 'antd/dist/antd.css'
 import './App.css'
+import './buttons.css'
 import { Logo } from './component/Image';
 import { createFromIconfontCN, SendOutlined } from '@ant-design/icons';
 const { Header, Content, Footer } = Layout;
@@ -16,7 +17,7 @@ const IconFont = createFromIconfontCN({
 const App = () => {
     return (
         <Layout className="layout">
-            <Header style={{ position: 'fixed', zIndex: 1, width: '100%' }}>
+            <Header className="header">
                 <div className="logo" />
                 <Nav />
             </Header>
