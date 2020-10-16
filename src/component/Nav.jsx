@@ -13,10 +13,10 @@ const Nav = (props) => {
         ]
         let path = props.history.location.pathname
         paths.map((item,i)=>{
-            path = path.includes(item)? item : path 
+            return path = path.includes(item)? item : path 
         })
         setSelected(path)
-    })
+    },[props.history.location.pathname])
     const handleClick = (item) => {
         setSelected(item.key);
     }

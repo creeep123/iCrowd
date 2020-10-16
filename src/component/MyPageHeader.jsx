@@ -13,11 +13,11 @@ const MyPageHeader = (props) => {
         ]
         let path = props.history.location.pathname
         paths.map((item,i)=>{
-            path = path.includes(item)? item : path 
+            return path = path.includes(item)? item : path 
         })
         path = path === '/' ? 'Home':path
         setTitle(path)
-    })
+    },[props.history.location.pathname])
     return (
         <PageHeader
         className="site-page-header"

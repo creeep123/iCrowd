@@ -18,7 +18,7 @@ const Home = (props) => {
     const onSearchChange = (e) => {
         setSearchTerm(e.target.value)
     }
-
+    
     return (<>
         <Carousel autoplay>
             <div>
@@ -36,7 +36,7 @@ const Home = (props) => {
         </Carousel>
         <br /><br />
         <Title className="content-title">Featured Requesters</Title>
-        <CardList searchStaff={searchTerm} listLength = {9}/>
+        <CardList searchItem={searchTerm} listLength = {9}/>
     </>)
 }
 export default Home

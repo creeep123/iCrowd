@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { message, Form, Input, InputNumber, Button, Select, DatePicker, Typography, Switch } from 'antd';
+import { Row, Col,message, Form, ConfigProvider, Input, InputNumber, Button, Select, DatePicker, Typography, Switch } from 'antd';
 import { CloseOutlined, CheckOutlined } from '@ant-design/icons';
 import moment from 'moment'
 import ImageUploader from '../component/ImageUploader'
@@ -22,111 +22,13 @@ const tailLayout = {
     },
 }
 
-const TaskSettings = {
-    choice_task: (<>
-        <Title style={{ background: "#f0f2f5", width: "60em", margin: "30px -40px", padding: "20px 0px 10px 0px" }} level={3}>Setting up your task</Title>
-        <Form.Item style={{ margin: '40px 0' }}
-            name="question"
-            label="Question"
-            rules={[
-                {
-                    required: true,
-                    message: 'Please input your task question!'
-                },
-            ]}
-        >
-            <Input placeholder="A question with one or several answers" />
-        </Form.Item>
-        <Form.Item
-            name="choice_task_option_1"
-            label="option 1"
-            rules={[
-                {
-                    required: true,
-                    message: 'Please input your task option1!'
-                },
-            ]}
-        >
-            <TextArea placeholder="" autoSize />
-        </Form.Item>
-        <Form.Item
-            name="choice_task_option_2"
-            label="option 2"
-            rules={[
-                {
-                    required: true,
-                    message: 'Please input your task option2!'
-                },
-            ]}
-        >
-            <TextArea placeholder="" autoSize />
-        </Form.Item>
-        <Form.Item
-            name="choice_task_option_3"
-            label="option 3"
-        >
-            <TextArea placeholder="" autoSize />
-        </Form.Item>
-        <Form.Item
-            name="choice_task_option_4"
-            label="option 4"
-        >
-            <TextArea placeholder="" autoSize />
-        </Form.Item>
-    </>),
-    decision_making_task: (<>
-        <Title style={{ background: "#f0f2f5", width: "60em", margin: "30px -40px", padding: "20px 0px 10px 0px" }} level={3}>Setting up your task</Title>
-        <Form.Item
-            name="question"
-            label="Question"
-            rules={[
-                {
-                    required: true,
-                    message: 'Please input your task question!'
-                },
-            ]}
-        >
-            <Input placeholder="A true or false question" />
-        </Form.Item></>),
-    sentence_level_task: (<>
-        <Title style={{ background: "#f0f2f5", width: "60em", margin: "30px -40px", padding: "20px 0px 10px 0px" }} level={3}>Setting up your task</Title>
-        <Form.Item
-            name="question"
-            label="Question"
-            rules={[
-                {
-                    required: true,
-                    message: 'Please input your task question!'
-                },
-            ]}
-        >
-            <Input placeholder="Workers need to provide sentences as answers" />
-        </Form.Item></>),
-    image_processing: (<>
-        <Title style={{ background: "#f0f2f5", width: "60em", margin: "30px -40px", padding: "20px 0px 10px 0px" }} level={3}>Setting up your task</Title>
-        <Form.Item
-            name="image_toprocessing"
-            label={<div className="button button-primary button-rounded button-small">Primary Button</div>}
-            rules={[
-                {
-                    required: true,
-                    message: 'Please upload your image!'
-                },
-            ]}
-        >
-            <Input name="image_toprocessing" style={{opacity: 0}} type ="file" accept=".png,image/png" />
-            {/* <ImageUploader/> */}
-        </Form.Item></>)
-}
-
 const RequestersPublish = () => {
     const [form] = Form.useForm();
-    const [serverMes, setserverMes] = useState('')
+    const [serverMes, setServerMes] = useState('')
     const [checked, setChecked] = useState(false)
 
     const onFinish = (values) => {
-        console.log("data", values)
-        values.require_master_worker = checked
+        console.log("form data:>>"+JSON.stringify(values))
         fetch('http://127.0.0.1:8081/create_task', {
             method: "POST",
             headers: {
@@ -137,16 +39,20 @@ const RequestersPublish = () => {
         })
             .then((res) => res.json())
             .then((data) => {
-                setserverMes(data)
+                setServerMes(data.message)
             })
             .catch(e => console.log('Error :>> ', e))
-        console.log(serverMes)
-        message.success('This is a success message')
+        console.log("Message from server :>> " + serverMes)
+        message.success('New task created successfully')
     };
 
     const onReset = () => {
         form.resetFields();
     };
+    const changeImg = (result) => {
+        form.setFieldsValue({ image_toprocessing: result });
+        // console.log('form :>> ', form.getFieldValue('image_toprocessing'));
+    }
 
     const onChange = (data) => {
         console.log(data)
@@ -172,8 +78,110 @@ const RequestersPublish = () => {
         }
     }
 
-    return (<>
-        <Form {...layout} form={form} name="control-hooks" onFinish={onFinish} >
+    const TaskSettings = {
+        choice_task: (<>
+            <Title style={{ background: "#f0f2f5", width: "60em", margin: "30px -40px", padding: "20px 0px 10px 0px" }} level={3}>Setting up your task</Title>
+            <Form.Item style={{ margin: '40px 0' }}
+                name="question"
+                label="Question"
+                rules={[
+                    {
+                        required: true,
+                        message: 'Please input your task question!'
+                    },
+                ]}
+            >
+                <Input placeholder="A question with one or several answers" />
+            </Form.Item>
+            <Form.Item
+                name="choice_task_option_1"
+                label="option 1"
+                rules={[
+                    {
+                        required: true,
+                        message: 'Please input your task option1!'
+                    },
+                ]}
+            >
+                <TextArea placeholder="" autoSize />
+            </Form.Item>
+            <Form.Item
+                name="choice_task_option_2"
+                label="option 2"
+                rules={[
+                    {
+                        required: true,
+                        message: 'Please input your task option2!'
+                    },
+                ]}
+            >
+                <TextArea placeholder="" autoSize />
+            </Form.Item>
+            <Form.Item
+                name="choice_task_option_3"
+                label="option 3"
+            >
+                <TextArea placeholder="" autoSize />
+            </Form.Item>
+            <Form.Item
+                name="choice_task_option_4"
+                label="option 4"
+            >
+                <TextArea placeholder="" autoSize />
+            </Form.Item>
+        </>),
+        decision_making_task: (<>
+            <Title style={{ background: "#f0f2f5", width: "60em", margin: "30px -40px", padding: "20px 0px 10px 0px" }} level={3}>Setting up your task</Title>
+            <Form.Item
+                name="question"
+                label="Question"
+                rules={[
+                    {
+                        required: true,
+                        message: 'Please input your task question!'
+                    },
+                ]}
+            >
+                <Input placeholder="A true or false question" />
+            </Form.Item></>),
+        sentence_level_task: (<>
+            <Title style={{ background: "#f0f2f5", width: "60em", margin: "30px -40px", padding: "20px 0px 10px 0px" }} level={3}>Setting up your task</Title>
+            <Form.Item
+                name="question"
+                label="Question"
+                rules={[
+                    {
+                        required: true,
+                        message: 'Please input your task question!'
+                    },
+                ]}
+            >
+                <Input placeholder="Workers need to provide sentences as answers" />
+            </Form.Item></>),
+        image_processing: (<>
+            <Title style={{ background: "#f0f2f5", width: "60em", margin: "30px -40px", padding: "20px 0px 10px 0px" }} level={3}>Setting up your task</Title>
+            <Form.Item
+                name="image_toprocessing"
+                label="Upload your image"
+                rules={[
+                    {
+                        required: true,
+                        message: 'Please upload your image!'
+                    },
+                ]}
+            >
+                {/* <Input id="input_image" name="image_toprocessing" style={{opacity: 0}} type ="file" accept=".png,image/png" /> */}
+                <ImageUploader onChangeImg={changeImg} />
+            </Form.Item></>)
+    }
+    const validateMessages = {
+        required: "'${name}' cannot be empty",
+    }
+
+    return (  
+    <ConfigProvider form={{ validateMessages }}>
+        <Form {...layout} form={form} name="control-hooks" onFinish={onFinish} action="">
+        
             <Form.Item
                 name="task_type"
                 label="Task Type"
@@ -194,6 +202,7 @@ const RequestersPublish = () => {
                 </Select>
             </Form.Item>
             <Title style={{ background: "#f0f2f5", width: "60em", margin: "30px -40px", padding: "20px 0px 10px 0px" }} level={3}>Describe your task to workers</Title>
+            
             <Form.Item
                 name="title"
                 label="Title"
@@ -217,7 +226,7 @@ const RequestersPublish = () => {
                 <TextArea placeholder="" autoSize />
             </Form.Item>
             <Form.Item
-                name="expire_data"
+                name="expire_date"
                 label="Expire Date"
                 rules={[
                     {
@@ -228,11 +237,11 @@ const RequestersPublish = () => {
                 <DatePicker
                     format="YYYY-MM-DD HH:mm:ss"
                     disabledDate={disabledDate}
-                    disabledTime={disabledDateTime}
+                    // disabledTime={disabledDateTime}
                     showTime={{ defaultValue: moment('00:00:00', 'HH:mm:ss') }}
                 />
             </Form.Item>
-
+            
             <Form.Item
                 noStyle
                 shouldUpdate={(prevValues, currentValues) => prevValues.task_type !== currentValues.task_type}
@@ -244,7 +253,7 @@ const RequestersPublish = () => {
                     ) : null
                 }}
             </Form.Item>
-
+            
             <Title style={{ background: "#f0f2f5", width: "60em", margin: "30px -40px", padding: "20px 0px 10px 0px" }} level={3}>Worker Requirement</Title>
             <Form.Item
                 name="require_master_worker"
@@ -256,6 +265,7 @@ const RequestersPublish = () => {
                     unCheckedChildren={<CloseOutlined />}
                     onChange={(checked) => {
                         setChecked(checked)
+                        form.setFieldsValue({ require_master_worker: checked })
                     }}
                 />
             </Form.Item>
@@ -269,7 +279,8 @@ const RequestersPublish = () => {
                 ]}
             >
                 <InputNumber
-                    defaultValue={0}
+                    defaultValue={1}
+                    min={1}
                     formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                     parser={value => value.replace(/\$\s?|(,*)/g, '')}
                     onChange={onChange}
@@ -285,8 +296,8 @@ const RequestersPublish = () => {
                 ]}
             >
                 <InputNumber
-                    defaultValue={0}
-                    min={0}
+                    defaultValue={1}
+                    min={1}
                     max={99999}
                     onChange={onChange}
                 />
@@ -300,8 +311,9 @@ const RequestersPublish = () => {
                     Reset
                 </Button>
             </Form.Item>
+            
         </Form>
-    </>);
+    </ConfigProvider>);
 };
 
 export default RequestersPublish

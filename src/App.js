@@ -7,17 +7,13 @@ import 'antd/dist/antd.css'
 import './App.css'
 import './buttons.css'
 import { Logo } from './component/Image';
-import { createFromIconfontCN, SendOutlined } from '@ant-design/icons';
+import { createFromIconfontCN, SendOutlined, InstagramOutlined, TwitterOutlined, FacebookOutlined } from '@ant-design/icons';
 const { Header, Content, Footer } = Layout;
-const IconFont = createFromIconfontCN({
-    scriptUrl: '//at.alicdn.com/t/font_8d5l8fzk5b87iudi.js',
-})
-
 
 const App = () => {
     return (
         <Layout className="layout">
-            <Header className="header">
+            <Header style={{ position: 'fixed', zIndex: 9, width: '100%' }}>
                 <div className="logo" />
                 <Nav />
             </Header>
@@ -36,10 +32,10 @@ const App = () => {
                 <Row>
                     <Col span={14} style={{ textAlign: "left" }}> NEWSLETTER SIGN &nbsp;&nbsp;<Input placeholder="Enter your email" style={{width:"160px"}} prefix={<SendOutlined />} /><Button >Subscribe</Button></Col>
                     <Col span={2}></Col>
-                    <Col span={8} style={{ textAlign: "right" }}>CONNECT US&nbsp;&nbsp;
-                            <IconFont type="icon-tuichu" />&nbsp;
-                            <IconFont type="icon-facebook" />&nbsp;
-                            <IconFont type="icon-twitter" />&nbsp;
+                    <Col span={8} style={{ textAlign: "right" }}>CONNECT US&nbsp;
+                            <InstagramOutlined />&nbsp;
+                            <FacebookOutlined />&nbsp;
+                            <TwitterOutlined />&nbsp;
                     </Col>
                 </Row>
             </Footer>

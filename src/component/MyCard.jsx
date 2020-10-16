@@ -1,17 +1,17 @@
 import React from 'react'
-import { Card } from 'antd'
+import { Card, Col } from 'antd'
 const { Meta } = Card;
 
 const MyCard = (props) => {
-    return (<div className="column">
+    return (<Col className="column">
         <Card
             hoverable
-            style={{ width: 360 }}
+            style={{ width: 400, margin: 15 }}
             cover={<img alt="avatar" src={props.avatar} />}
         >
             <Meta title={props.name} description={props.email} />
         </Card>
-    </div>)
+    </Col>)
 }
 
 export default MyCard

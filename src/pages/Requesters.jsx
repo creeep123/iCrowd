@@ -22,7 +22,7 @@ const Requesters = (props) => {
         <Link to="Requesters/Publish">
             <Button type="primary" >New Requester Task</Button>
         </Link>
-        <CardList searchStaff={searchTerm} listLength = {9}/>
+        <CardList searchItem={searchTerm} listLength = {9}/>
         
     </>)
 }
