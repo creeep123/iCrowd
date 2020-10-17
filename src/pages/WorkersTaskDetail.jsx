@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { fetchTask } from '../component/fetchTask'
-import { Row, Card, Image } from 'antd';
+import { Row, Col, Card, Image } from 'antd';
+import TagGroup from '../component/TagGroup'
 
 const WorkersTaskDetail = (props) => {
     const [task, setTask] = useState('')
@@ -50,10 +51,15 @@ const WorkersTaskDetail = (props) => {
                         {task.choice_task_option_2 ? (<li>B: {task.choice_task_option_2}</li>) : null}
                         {task.choice_task_option_3 ? (<li>C: {task.choice_task_option_3}</li>) : null}
                         {task.choice_task_option_4 ? (<li>D: {task.choice_task_option_4}</li>) : null}
-                        {task.image_toprocessing ? (<Image
-                            width={200}
-                            src={task.image_toprocessing}
-                        />) : null}
+                        {task.image_toprocessing ? (
+                            <Row gutter={16}>
+                                <Col><Image
+                                    width={400}
+                                    src={task.image_toprocessing}
+                                /></Col>
+                                <Col><TagGroup img={task.image_toprocessing}/></Col>
+                            </Row>
+                        ) : null}
                     </ul>
                 </Card>
             </Card>

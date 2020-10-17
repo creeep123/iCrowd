@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom'
 
 const MyPageHeader = (props) => {
     const [title, setTitle] = useState('')
+    const [subtitle,setSubtitle] = useState('')
     // const [loading,setLoading] = useState(false)
     useEffect(() => {//当加载组件时执行函数
         const paths = [
@@ -17,12 +18,13 @@ const MyPageHeader = (props) => {
         })
         path = path === '/' ? 'Home':path
         setTitle(path)
+        setSubtitle(`Page for ${path}`)
     },[props.history.location.pathname])
     return (
         <PageHeader
         className="site-page-header"
         title={title}
-        subTitle="This is a subtitle"
+        subTitle={subtitle}
     />
     )
 }

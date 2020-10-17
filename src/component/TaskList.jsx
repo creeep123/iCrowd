@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { Skeleton, Row, Card, Col, Button, message, Typography } from 'antd';
 import { PlusOutlined, DeleteOutlined } from '@ant-design/icons';
 import { fetchTask } from './fetchTask'
-import { fetchConcepts } from '../component/fetchConcepts'
 import './FeaturedCardList.css'
 
 
@@ -54,13 +53,14 @@ const TaskList = (props) => {
     useEffect(() => {
         (async () => {
             setLoading(true)
-            let conceptsList = await fetchConcepts()
-            console.log('!!!!!list:>>>>>',conceptsList)
             let data = await fetchTask()
             let filteredTasks = data.filter((task) => {
                 return task.title.toLocaleLowerCase().includes(props.searchItem.toLocaleLowerCase())
             })
             filteredTasks = bubble(filteredTasks, props.order)
+            if (props.order === 'publish_time'){
+                filteredTasks = filteredTasks.reverse()
+            }
             // filteredTasks.splice(listLength, filteredTasks.length - listLength)
             setTaskList(filteredTasks)
             setLoading(false)
