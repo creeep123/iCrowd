@@ -20,7 +20,7 @@ const Requesters = (props) => {
             style={{ width: 300 }}
         /> */}
         <Link to="Requesters/Publish">
-            <Button type="primary" >New Requester Task</Button>
+            <Button type="primary" >New Task</Button>
         </Link>
         <CardList searchItem={searchTerm} listLength = {9}/>
         

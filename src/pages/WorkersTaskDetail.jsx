@@ -5,6 +5,7 @@ import { Row, Card, Image } from 'antd';
 const WorkersTaskDetail = (props) => {
     const [task, setTask] = useState('')
     const [loading, setLoading] = useState(true)
+
     useEffect(() => {
         let id = window.location.pathname.replace("/Workers/task/", "");
         (async () => {
@@ -15,8 +16,8 @@ const WorkersTaskDetail = (props) => {
     }, [])
     return (<>
         <Row justify="space-between">
-            <Card title={`${task.title?task.title:"loading..."}`} style={{ width: '100%', margin: '2%' }}>
-                <p>{loading?null:(<b>Expire Date: </b>)}{loading?null:(task.expire_date)}</p>
+            <Card title={`${task.title ? task.title : "loading..."}`} style={{ width: '100%', margin: '2%' }}>
+                <p>{loading ? null : (<b>Expire Date: </b>)}{loading ? null : (task.expire_date)}</p>
                 <Card
                     loading={loading}
                     style={{ marginTop: 16 }}
@@ -43,7 +44,7 @@ const WorkersTaskDetail = (props) => {
                     type="inner"
                     title="Task Description"
                 >
-                    <p>{task.question?<b>Question: </b>:null}{task.question ? (task.question) : null}</p>
+                    <p>{task.question ? <b>Question: </b> : null}{task.question ? (task.question) : null}</p>
                     <ul>
                         {task.choice_task_option_1 ? (<li>A: {task.choice_task_option_1}</li>) : null}
                         {task.choice_task_option_2 ? (<li>B: {task.choice_task_option_2}</li>) : null}
