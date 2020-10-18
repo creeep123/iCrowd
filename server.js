@@ -99,7 +99,7 @@ app.get("/google_sign_in/redirect", passport.authenticate('google'), (req, res) 
 
 // Requester API Route
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, "public/index.html"))
+    res.sendFile(path.join(__dirname, "public/indexServer.html"))
 })
 app.get('/requester', (req, res) => {
     Requester.find((err, requesterList) => {
